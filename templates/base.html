@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    .navbar-dark .navbar-nav .nav-link {
+      transition: color 0.2s ease;
+    }
+
+    .navbar-dark .navbar-nav .nav-link:hover {
+        color: #d3d3d3 !important;
+    }
+    </style>
+</head>
+<body style="background-color: #f0ca9e;">
+
+<nav class="navbar navbar-dark navbar-expand-lg" style="background-color: #ffa024">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Pet Adoption</a>
+    <div>
+      <ul class="navbar-nav">
+        <li class="nav-item"> 
+          <a class="nav-link" href="/pets">Pets</a>
+        </li> 
+        <li class="nav-item">
+          <a class="nav-link" href="/apply">Apply</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin">Admin</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>

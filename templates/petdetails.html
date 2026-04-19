@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Pet Details</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h4>{{ pet.name }}</h4>
+        <p><strong>Breed:</strong> {{ pet.breed }}</p>
+        <p><strong>Age:</strong> {{ pet.age }}</p>
+        <p><strong>Status:</strong> {{ pet.status }}</p>
+
+        <a href="/apply?pet_id={{ pet.pet_id }}" class="btn btn-primary">
+            Apply for Adoption
+        </a>
+    </div>
+</div>
+
+{% endblock %}

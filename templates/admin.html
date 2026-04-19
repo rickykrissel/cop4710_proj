@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Admin Dashboard</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Applicant</th>
+            <th>Pet ID</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for app in applications %}
+        <tr>
+            <td>{{ app.name }}</td>
+            <td>{{ app.pet_id }}</td>
+            <td>{{ app.status }}</td>
+            <td>
+                <a href="/approve/{{ app.id }}" class="btn btn-success btn-sm">
+                    Approve
+                </a>
+
+                <a href="/reject/{{ app.id }}" class="btn btn-danger btn-sm">
+                    Reject
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
