@@ -4,10 +4,7 @@ from datetime import date
 
 app = Flask(__name__)
 
-# ==============================
-# Database Connection
-# ==============================
-
+#Database Connection
 def get_db_connection():
     connection = mysql.connector.connect(
         host='localhost',
@@ -18,17 +15,12 @@ def get_db_connection():
     return connection
 
 
-# ==============================
-# Home Page
-# ==============================
+#Home Page
 @app.route('/')
 def home():
     return render_template('home.html')
 
-
-# ==============================
-# View All Pets
-# ==============================
+#View All Pets
 @app.route('/pets')
 def pets():
     conn = get_db_connection()
@@ -43,9 +35,7 @@ def pets():
     return render_template('pets.html', pets=pets)
 
 
-# ==============================
-# Pet Details
-# ==============================
+#Pet Details
 @app.route('/pets/<int:pet_id>')
 def pet_details(pet_id):
     conn = get_db_connection()
@@ -60,9 +50,7 @@ def pet_details(pet_id):
     return render_template('pet_details.html', pet=pet)
 
 
-# ==============================
-# Adoption Application
-# ==============================
+#Adoption Application
 @app.route('/apply', methods=['GET', 'POST'])
 def apply():
     if request.method == 'POST':
@@ -76,7 +64,7 @@ def apply():
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        # Insert adopter
+        #Insert adopter
         cursor.execute(
             """
             INSERT INTO Adopter (adopter_name, email, age)
@@ -86,7 +74,7 @@ def apply():
         )
         adopter_id= cursor.lastrowid
 
-        # Insert application
+        #Insert application
         cursor.execute(
             """
             INSERT INTO AdoptionApplication (application_date, application_status, pet_id)
@@ -96,7 +84,7 @@ def apply():
         )
         application_id= cursor.lastrowid
 
-        # Link adopter to application
+        #Link adopter to application
         cursor.execute(
             """
             INSERT INTO Submits (application_id, adopter_id)
@@ -115,9 +103,7 @@ def apply():
     return render_template('apply.html', pet_id=pet_id)
 
 
-# ==============================
-# Admin Dashboard
-# ==============================
+#Admin Dashboard
 @app.route('/admin')
 def admin():
     conn = get_db_connection()
@@ -139,9 +125,7 @@ def admin():
 
     return render_template('admin.html', applications=applications)
 
-# ==============================
-# Reports / Aggregate Query
-# ==============================
+#Reports / Aggregate Query
 @app.route('/reports')
 def reports():
     conn = get_db_connection()
@@ -161,9 +145,7 @@ def reports():
     return render_template('reports.html', status_counts=status_counts)
 
 
-# ==============================
-# Approve Application
-# ==============================
+#Approve Application
 @app.route('/approve/<int:app_id>')
 def approve(app_id):
     conn = get_db_connection()
@@ -181,9 +163,7 @@ def approve(app_id):
     return redirect(url_for('admin'))
 
 
-# ==============================
-# Reject Application
-# ==============================
+#Reject Application
 @app.route('/reject/<int:app_id>')
 def reject(app_id):
     conn = get_db_connection()
@@ -200,9 +180,7 @@ def reject(app_id):
 
     return redirect(url_for('admin'))
 
-# ==============================
-# Delete Application
-# ==============================
+#Delete Application
 @app.route('/delete_application/<int:app_id>')
 def delete_application(app_id):
     conn = get_db_connection()
@@ -232,8 +210,6 @@ def delete_application(app_id):
     return redirect(url_for('admin'))
 
 
-# ==============================
-# Run App
-# ==============================
+#Run App
 if __name__ == '__main__':
     app.run(debug=True)
