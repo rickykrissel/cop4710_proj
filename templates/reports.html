@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Application Status Report</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Status</th>
+            <th>Total Applications</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for row in status_counts %}
+        <tr>
+            <td>{{ row.application_status }}</td>
+            <td>{{ row.total_applications }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="/admin" class="btn btn-secondary">Back to Admin</a>
+
+{% endblock %}
