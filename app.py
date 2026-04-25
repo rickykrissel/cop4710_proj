@@ -47,7 +47,7 @@ def pet_details(pet_id):
     cursor.close()
     conn.close()
 
-    return render_template('pet_details.html', pet=pet)
+    return render_template('petdetails.html', pet=pet)
 
 
 #Adoption Application
@@ -209,6 +209,29 @@ def delete_application(app_id):
 
     return redirect(url_for('admin'))
 
+#Match Compatibility of Applicant with Available Pets
+@app.route('/matches')
+def matches():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT *
+        FROM vw_match_scores v
+        WHERE match_score = (
+            SELECT MAX(match_score)
+            FROM vw_match_scores
+            WHERE pet_id = v.pet_id
+        )
+        ORDER BY pet_id
+    """)
+
+    matches = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template('matches.html', matches=matches)
 
 #Run App
 if __name__ == '__main__':

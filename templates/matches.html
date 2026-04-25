@@ -1,0 +1,28 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+<h2>Recommended Adopters for Each Pet</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Pet</th>
+            <th>Best Adopter</th>
+            <th>Age</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for m in matches %}
+        <tr>
+            <td>{{ m.pet_name }}</td>
+            <td>{{ m.adopter_name }}</td>
+            <td>{{ m.age }}</td>
+            <td>{{ m.match_score }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

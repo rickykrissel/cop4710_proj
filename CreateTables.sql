@@ -1,3 +1,4 @@
+CREATE DATABASE IF NOT EXISTS pet_adoption;
 CREATE TABLE Shelter (
     shelter_name VARCHAR(100) NOT NULL,
     location VARCHAR(100) NOT NULL,
