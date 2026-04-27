@@ -1,4 +1,5 @@
-﻿CREATE OR REPLACE VIEW vw_match_scores AS
+﻿DROP VIEW IF EXISTS vw_match_scores;
+CREATE VIEW vw_match_scores AS
 SELECT 
     a.adopter_id,
     p.pet_id,
