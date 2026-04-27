@@ -37,7 +37,7 @@ CREATE TABLE Staff (
 
 CREATE TABLE AdoptionApplication (
     application_id INTEGER AUTO_INCREMENT NOT NULL,
-    pplication_date DATE NOT NULL,
+    application_date DATE NOT NULL,
     application_status ENUM('Pending', 'Approved', 'Rejected') NOT NULL,
     pet_id INTEGER NOT NULL,
     PRIMARY KEY (application_id),
