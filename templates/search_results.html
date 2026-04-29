@@ -1,0 +1,51 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Search Results</h1>
+
+    <p>
+        {% if species or breed %}
+            Showing pets
+            {% if species %} matching species "<strong>{{ species }}</strong>"{% endif %}
+            {% if species and breed %} and{% endif %}
+            {% if breed %} breed "<strong>{{ breed }}</strong>"{% endif %}.
+        {% else %}
+            Showing all pets.
+        {% endif %}
+    </p>
+
+    {% if pets %}
+        <table border="1" cellpadding="6">
+            <tr>
+                <th>Name</th>
+                <th>Species</th>
+                <th>Breed</th>
+                <th>Shelter</th>
+                <th>Location</th>
+                <th>Action</th>
+            </tr>
+            {% for pet in pets %}
+            <tr>
+                <td>{{ pet.pet_name }}</td>
+                <td>{{ pet.species }}</td>
+                <td>{{ pet.breed }}</td>
+                <td>{{ pet.shelter_name }}</td>
+                <td>{{ pet.location }}</td>
+                <td>
+                    <a href="{{ url_for('pet_details', pet_id=pet.pet_id) }}">View</a> |
+                    <a href="{{ url_for('apply', pet_id=pet.pet_id) }}">Apply</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No pets matched your search. Try different criteria.</p>
+    {% endif %}
+
+    <p>
+        <a href="{{ url_for('home') }}">Back to Home</a> |
+        <a href="{{ url_for('pets') }}">View All Pets</a>
+    </p>
+{% endblock %}

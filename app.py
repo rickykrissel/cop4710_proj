@@ -9,11 +9,47 @@ def get_db_connection():
     connection = mysql.connector.connect(
         host='localhost',
         user='root',
-        password='password',
+        password='Pa$$w0rd#4569',
         database='pet_adoption'
     )
     return connection
 
+#Search Pets by Breed and/or Species
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST':
+        species = request.form.get('species', '').strip()
+        breed = request.form.get('breed', '').strip()
+    else:
+        species = request.args.get('species', '').strip()
+        breed = request.args.get('breed', '').strip()
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+ 
+    query = "SELECT * FROM Pet WHERE 1=1"
+    params = []
+
+    if species:
+        query += " AND species LIKE %s"
+        params.append(f"%{species}%")
+
+    if breed:
+        query += " AND breed LIKE %s"
+        params.append(f"%{breed}%")
+
+    cursor.execute(query, params)
+    results = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+        'search_results.html',
+        pets=results,
+        species=species,
+        breed=breed
+    )
 
 #Home Page
 @app.route('/')

@@ -8,5 +8,15 @@
     <br>
     <br>
     <a href="/pets" class="btn btn-warning">View Available Pets</a>
+    <h2>Search for a Pet</h2>
+    <form action="{{ url_for('search') }}" method="POST">
+        <label for="species">Species:</label>
+        <input type="text" id="species" name="species" placeholder="e.g., Dog, Cat">
+
+        <label for="breed">Breed:</label>
+        <input type="text" id="breed" name="breed" placeholder="e.g., Labrador, Siamese">
+
+        <button type="submit">Search</button>
+    </form>
 </div>
 {% endblock %}
