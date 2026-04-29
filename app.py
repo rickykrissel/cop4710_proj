@@ -9,11 +9,47 @@ def get_db_connection():
     connection = mysql.connector.connect(
         host='localhost',
         user='root',
-        password='password',
+        password='Pa$$w0rd#4569',
         database='pet_adoption'
     )
     return connection
 
+#Search Pets by Breed and/or Species
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST':
+        species = request.form.get('species', '').strip()
+        breed = request.form.get('breed', '').strip()
+    else:
+        species = request.args.get('species', '').strip()
+        breed = request.args.get('breed', '').strip()
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+ 
+    query = "SELECT * FROM Pet WHERE 1=1"
+    params = []
+
+    if species:
+        query += " AND species LIKE %s"
+        params.append(f"%{species}%")
+
+    if breed:
+        query += " AND breed LIKE %s"
+        params.append(f"%{breed}%")
+
+    cursor.execute(query, params)
+    results = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+        'search_results.html',
+        pets=results,
+        species=species,
+        breed=breed
+    )
 
 #Home Page
 @app.route('/')
@@ -47,7 +83,7 @@ def pet_details(pet_id):
     cursor.close()
     conn.close()
 
-    return render_template('pet_details.html', pet=pet)
+    return render_template('petdetails.html', pet=pet)
 
 
 #Adoption Application
@@ -209,6 +245,29 @@ def delete_application(app_id):
 
     return redirect(url_for('admin'))
 
+#Match Compatibility of Applicant with Available Pets
+@app.route('/matches')
+def matches():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT *
+        FROM vw_match_scores v
+        WHERE match_score = (
+            SELECT MAX(match_score)
+            FROM vw_match_scores
+            WHERE pet_id = v.pet_id
+        )
+        ORDER BY pet_id
+    """)
+
+    matches = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template('matches.html', matches=matches)
 
 #Run App
 if __name__ == '__main__':

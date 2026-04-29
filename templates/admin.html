@@ -27,11 +27,11 @@
             <td>{{ app.pet_name }}</td>
             <td>{{ app.application_status }}</td>
             <td>
-                <a href="/approve/{{ app.id }}" class="btn btn-success btn-sm">
+                <a href="/approve/{{ app.application_id }}" class="btn btn-success btn-sm">
                     Approve
                 </a>
 
-                <a href="/reject/{{ app.id }}" class="btn btn-danger btn-sm">
+                <a href="/reject/{{ app.application_id }}" class="btn btn-danger btn-sm">
                     Reject
                 </a>
                 <a href="{{ url_for('delete_application', app_id=app.application_id) }}" 
